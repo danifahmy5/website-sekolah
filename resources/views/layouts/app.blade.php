@@ -18,6 +18,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
 
     <!-- Styles -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css">
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
@@ -37,14 +38,30 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav me-auto">
-
+                        <li class="nav-item">
+                            <a href="{{ route('users.index') }}" class="nav-link"></a>
+                        </li>
                     </ul>
 
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
-                        @guest
-                        @else
+                        @auth
+                            <li class="nav-item">
+                                <a class="nav-link" href="#">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('users') ? 'active' : '' }}"
+                                    href="{{ route('users.index') }}">Users</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('teacher') ? 'active' : '' }}"
+                                    href="{{ route('teacher.index') }}">Guru</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('categories') ? 'active' : '' }}"
+                                    href="{{ route('categories.index') }}">Kategori Blog</a>
+                            </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
                                     data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>

@@ -2,13 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\Category\InsertRequest;
-use App\Http\Requests\Category\UpdateRequest;
-use App\Models\Category;
+use App\Http\Requests\User\InsertRequest;
+use App\Http\Requests\User\UpdateRequest;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Hash;
 
-class CategoryController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -19,12 +20,12 @@ class CategoryController extends Controller
     {
         $search = $request->query('s');
 
-        $categories = Category::where(DB::raw("CONCAT(name)"), 'LIKE', "%$search%")
+        $users = User::where(DB::raw("CONCAT(name,email)"), 'LIKE', "%$search%")
             ->orderBy('id', 'DESC')
             ->paginate(10)
             ->withQueryString();
 
-        return view('admin.categories.index', compact('categories'));
+        return view('admin.users.index', compact('users'));
     }
 
     /**
@@ -34,7 +35,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        return view('admin.categories.create');
+        return view('admin.users.create');
     }
 
     /**
@@ -46,11 +47,13 @@ class CategoryController extends Controller
     public function store(InsertRequest $request)
     {
 
-        $category = Category::create([
-            'name' => $request->input('name')
+        $user = User::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'password' => Hash::make($request->input('password')),
         ]);
 
-        return redirect()->route('categories.index')->with('message', "berhasil menambahkan $category->name");
+        return redirect()->route('users.index')->with('message', "berhasil menambahkan $user->name");
     }
 
     /**
@@ -61,9 +64,9 @@ class CategoryController extends Controller
      */
     public function show($id)
     {
-        $category = Category::findOrFail($id);
+        $user = User::findOrFail($id);
 
-        return view('admin.categories.show', compact('user'));
+        return view('admin.users.show', compact('user'));
     }
 
     /**
@@ -74,9 +77,9 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
-        $category = Category::findOrFail($id);
+        $user = User::findOrFail($id);
 
-        return response()->view('admin.categories.edit', compact('category'));
+        return response()->view('admin.users.edit', compact('user'));
     }
 
     /**
@@ -88,12 +91,22 @@ class CategoryController extends Controller
      */
     public function update(UpdateRequest $request, $id)
     {
-        $category = Category::findOrFail($id);
-        $category->update([
-            'name' => $request->input('name')
+        $user = User::findOrFail($id);
+        $email = $request->input('email');
+
+        if ($user->email != $email) {
+            $request->validate([
+                'email' => ['unique:users,email']
+            ]);
+        }
+
+        $user->update([
+            'name' => $request->input('name'),
+            'email' => $email,
+            'password' => Hash::make($request->input('password')),
         ]);
 
-        return redirect()->route('categories.index', ['nama' => $category->name])->with('message', "berhasil update $category->name");;
+        return redirect()->route('users.index', ['nama' => $user->name])->with('message', "berhasil update $user->name");;
     }
 
     /**
@@ -104,9 +117,10 @@ class CategoryController extends Controller
      */
     public function destroy($id)
     {
-        $category = Category::findOrFail($id);
-        $category->update(['status' => !$category->status]);
+        $user = User::findOrFail($id);
 
-        return redirect()->route('categories.index')->with('message', "berhasil menonaktifkan $category->name");
+        $user->delete();
+
+        return redirect()->route('users.index')->with('message', "berhasil menghapus $user->name");
     }
 }
