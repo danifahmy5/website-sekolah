@@ -26,7 +26,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/') }}">
+                <a class="navbar-brand" href="{{ url('/profiles') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
@@ -47,20 +47,33 @@
                     <ul class="navbar-nav ms-auto">
                         <!-- Authentication Links -->
                         @auth
+
                             <li class="nav-item">
-                                <a class="nav-link" href="#">Home</a>
+                                <a class="nav-link {{ request()->is('profiles') ? 'active' : '' }}"
+                                    href="{{ route('profiles.index') }}">Home</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('baners') ? 'active' : '' }}"
+                                    href="{{ route('baners.index') }}">Baner</a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('teacher') ? 'active' : '' }}"
+                                    href="{{ route('teacher.index') }}">Guru</a>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('majors') ? 'active' : '' }}"
+                                    href="{{ route('majors.index') }}">Jurusan</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('categories') ? 'active' : '' }}"
+                                    href="{{ route('categories.index') }}">Kategori Artikel</a>
+                            <li class="nav-item">
+                                <a class="nav-link {{ request()->is('articles') ? 'active' : '' }}"
+                                    href="{{ route('articles.index') }}">Artikel</a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link {{ request()->is('users') ? 'active' : '' }}"
                                     href="{{ route('users.index') }}">Users</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->is('teacher') ? 'active' : '' }}"
-                                    href="{{ route('teacher.index') }}">Guru</a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link {{ request()->is('categories') ? 'active' : '' }}"
-                                    href="{{ route('categories.index') }}">Kategori Blog</a>
                             </li>
                             <li class="nav-item dropdown">
                                 <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"

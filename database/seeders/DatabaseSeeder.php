@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Profile;
 use App\Models\Teacher;
 use Illuminate\Database\Seeder;
 
@@ -18,7 +19,9 @@ class DatabaseSeeder extends Seeder
             UserSeeder::class,
             TeacherSeeder::class,
             CategorySeeder::class,
-            ArticleSeeder::class
+            ArticleSeeder::class,
+            BanerSeeder::class,
+            ProfileSeeder::class
         ]);
     }
 }

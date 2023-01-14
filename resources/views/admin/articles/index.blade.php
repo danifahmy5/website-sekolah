@@ -5,9 +5,9 @@
         <div class="row bg-white p-3">
             <div class="col-12">
                 <div class="d-flex justify-content-between">
-                    <h1>Users</h1>
+                    <h1>Artikel</h1>
                     <div>
-                        <a href="{{ route('users.create') }}" class="btn btn-primary">Tambah User</a>
+                        <a href="{{ route('articles.create') }}" class="btn btn-primary">Tambah Artikel</a>
 
                     </div>
                 </div>
@@ -16,7 +16,7 @@
                         <nav aria-label="breadcrumb">
                             <ol class="breadcrumb">
                                 <li class="breadcrumb-item"><a href="#">Admin</a></li>
-                                <li class="breadcrumb-item active" aria-current="page">Users</li>
+                                <li class="breadcrumb-item active" aria-current="page">Articles</li>
                             </ol>
                         </nav>
 
@@ -36,33 +36,40 @@
                     <thead>
                         <tr>
                             <th>No</th>
-                            <th>Nama</th>
-                            <th>Email</th>
+                            {{-- <th>Kategori</th> --}}
+                            <th>Title</th>
+                            <th>Deskripsi</th>
                             <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach ($users as $user)
+                        @foreach ($articles as $article)
                             <tr>
-                                <td scope="row">{{ $loop->index + 1 }}</td>
-                                <td>{{ $user->name }}</td>
-                                <td>{{ $user->email }}</td>
+                                <td scope="row">{{ $loop->index + 1 * request('page', 1) * 10 - 10 + 1 }}</td>
+
+                                {{-- <td>{{ $article->category->name }}</td> --}}
+                                <td>{{ $article->title }}</td>
+                                <td>{{ strlen($article->description) > 50 ? substr($article->description, 0, 50) . '....' : $article->description }}
+                                </td>
                                 <td>
-                                    <a href="{{ route('users.edit', $user->id) }}" class="btn btn-success btn-sm">Edit</a>
-                                    <a onclick="confirm('yakin akan menghapus data??') ?  document.getElementById('delete-user-{{ $user->id }}').submit() : null
+                                    <a href="{{ route('articles.show', $article->id) }}"
+                                        class="btn btn-info btn-sm">Detail</a>
+                                    <a href="{{ route('articles.edit', $article->id) }}"
+                                        class="btn btn-success btn-sm">Edit</a>
+                                    <a onclick="confirm('yakin akan menghapus data??') ?  document.getElementById('delete-user-{{ $article->id }}').submit() : null
                                         "
                                         class="btn btn-danger btn-sm">Delete</a>
                                 </td>
                             </tr>
-                            <form method="POST" action="{{ route('users.destroy', $user->id) }}"
-                                id="delete-user-{{ $user->id }}">
+                            <form method="POST" action="{{ route('articles.destroy', $article->id) }}"
+                                id="delete-user-{{ $article->id }}">
                                 @csrf
                                 @method('DELETE')
                             </form>
                         @endforeach
                     </tbody>
                 </table>
-                {{ $users->links() }}
+                {{ $articles->links() }}
 
             </div>
 

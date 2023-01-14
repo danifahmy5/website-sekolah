@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Teacher;
+namespace App\Http\Requests\Baner;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -13,7 +13,7 @@ class InsertRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,12 +24,9 @@ class InsertRequest extends FormRequest
     public function rules()
     {
         return [
-            'name' => ['required'],
-            'major' => ['required'],
-            'email' => ['required'],
-            'phone' => ['required'],
-            'image' => ['image', 'mimes:jpg,jpeg,png'],
-            'description' => ['required']
+            'title' => ['required'],
+            'link' => ['required', 'url'],
+            'image' => ['required', 'image', 'mimes:png,jpg,jpeg']
         ];
     }
 }

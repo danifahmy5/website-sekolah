@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\Teacher\InsertRequest;
 use App\Http\Requests\Teacher\UpdateRequest;
 use App\Models\Teacher;
 use Illuminate\Http\Request;
@@ -45,7 +46,7 @@ class TeacherController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(InsertRequest $request)
     {
         $image = $request->file('image');
         $newNameImage = generateRandomString(20) . '.' . $image->getClientOriginalExtension();
