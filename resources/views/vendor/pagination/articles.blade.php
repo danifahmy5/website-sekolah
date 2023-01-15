@@ -7,7 +7,7 @@
                     @if ($paginator->onFirstPage())
                         {{-- <li><a href="#"><i class="ion-ios-arrow-back"></i></a></li> --}}
                     @else
-                        <li><a href="#"><i class="ion-ios-arrow-back"></i></a></li>
+                        <li><a href="{{ $paginator->previousPageUrl() }}"><i class="ion-ios-arrow-back"></i></a></li>
                     @endif
 
                     {{-- Pagination Elements --}}
@@ -32,11 +32,8 @@
 
                     {{-- Next Page Link --}}
                     @if ($paginator->hasMorePages())
-                        <li><a href="#"><i class="ion-ios-arrow-forward"></i></a></li>
+                        <li><a href="{{ $paginator->nextPageUrl() }}"><i class="ion-ios-arrow-forward"></i></a></li>
                     @else
-                        <li><a href="#"><i class="ion-ios-arrow-forward"></i></a></li>
-
-                        </li>
                     @endif
                 </ul>
             </div>

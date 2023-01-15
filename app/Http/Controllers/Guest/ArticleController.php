@@ -20,7 +20,7 @@ class ArticleController extends Controller
             }
         }
 
-        $articles = $articles->paginate(9)->withQueryParams();
+        $articles = $articles->paginate(9)->withQueryString();
         $data = [
             'title' => 'Kegiatan',
             'page' => 'article',
@@ -37,9 +37,9 @@ class ArticleController extends Controller
             'title' => 'Detail kegiatan',
             'page' => 'article',
             'article' =>  Article::findOrFail($id),
-            'categories' => Category::all('id', 'name')
+            'categories' => Category::all('id', 'name'),
+            'articles' => Article::inRandomOrder()->limit(3)->get()
         ];
-
 
         return view('guest.showArticle', $data);
     }
