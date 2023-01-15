@@ -16,4 +16,9 @@ class Major extends Model
         'image',
         'status',
     ];
+
+    function scopeActive($q)
+    {
+        return $q->where('status', TRUE);
+    }
 }

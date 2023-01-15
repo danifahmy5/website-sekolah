@@ -49,30 +49,30 @@
                         @auth
 
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->is('profiles') ? 'active' : '' }}"
+                                <a class="nav-link {{ request()->is('admin/profiles') ? 'active' : '' }}"
                                     href="{{ route('profiles.index') }}">Home</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->is('baners') ? 'active' : '' }}"
+                                <a class="nav-link {{ request()->is('admin/baners') ? 'active' : '' }}"
                                     href="{{ route('baners.index') }}">Baner</a>
                             </li>
 
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->is('teacher') ? 'active' : '' }}"
+                                <a class="nav-link {{ request()->is('admin/teacher') ? 'active' : '' }}"
                                     href="{{ route('teacher.index') }}">Guru</a>
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->is('majors') ? 'active' : '' }}"
+                                <a class="nav-link {{ request()->is('admin/majors') ? 'active' : '' }}"
                                     href="{{ route('majors.index') }}">Jurusan</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->is('categories') ? 'active' : '' }}"
+                                <a class="nav-link {{ request()->is('admin/categories') ? 'active' : '' }}"
                                     href="{{ route('categories.index') }}">Kategori Artikel</a>
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->is('articles') ? 'active' : '' }}"
+                                <a class="nav-link {{ request()->is('admin/articles') ? 'active' : '' }}"
                                     href="{{ route('articles.index') }}">Artikel</a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link {{ request()->is('users') ? 'active' : '' }}"
+                                <a class="nav-link {{ request()->is('admin/users') ? 'active' : '' }}"
                                     href="{{ route('users.index') }}">Users</a>
                             </li>
                             <li class="nav-item dropdown">

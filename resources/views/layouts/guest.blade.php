@@ -1,8 +1,12 @@
+@php
+    $profile = profile();
+    $articles = article();
+@endphp
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-    <title>Kiddos - Free Bootstrap 4 Template by Colorlib</title>
+    <title>{{ $title }} | {{ env('APP_NAME') }}</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -34,17 +38,17 @@
                         <div class="col-md-5 pr-4 d-flex topper align-items-center">
                             <div class="icon bg-fifth mr-2 d-flex justify-content-center align-items-center"><span
                                     class="icon-map"></span></div>
-                            <span class="text">198 West 21th Street, Suite 721 New York NY 10016</span>
+                            <span class="text">{{ $profile->address }}</span>
                         </div>
                         <div class="col-md pr-4 d-flex topper align-items-center">
                             <div class="icon bg-secondary mr-2 d-flex justify-content-center align-items-center"><span
                                     class="icon-paper-plane"></span></div>
-                            <span class="text">youremail@email.com</span>
+                            <span class="text">{{ $profile->email }}</span>
                         </div>
                         <div class="col-md pr-4 d-flex topper align-items-center">
                             <div class="icon bg-tertiary mr-2 d-flex justify-content-center align-items-center"><span
                                     class="icon-phone2"></span></div>
-                            <span class="text">+ 1235 2355 98</span>
+                            <span class="text">{{ $profile->phone }}</span>
                         </div>
                     </div>
                 </div>
@@ -53,20 +57,28 @@
     </div>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark ftco_navbar ftco-navbar-light" id="ftco-navbar">
         <div class="container d-flex align-items-center">
-            <a class="navbar-brand" href="index.html">Kiddos</a>
+            <a class="navbar-brand" href="index.html">{{ env('APP_NAME') }}</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
                 aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="oi oi-menu"></span> Menu
             </button>
             <div class="collapse navbar-collapse" id="ftco-nav">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item active"><a href="index.html" class="nav-link pl-0">Home</a></li>
-                    <li class="nav-item"><a href="about.html" class="nav-link">About</a></li>
-                    <li class="nav-item"><a href="teacher.html" class="nav-link">Teacher</a></li>
-                    <li class="nav-item"><a href="courses.html" class="nav-link">Courses</a></li>
-                    <li class="nav-item"><a href="pricing.html" class="nav-link">Pricing</a></li>
-                    <li class="nav-item"><a href="blog.html" class="nav-link">Blog</a></li>
-                    <li class="nav-item"><a href="contact.html" class="nav-link">Contact</a></li>
+                    <li class="nav-item {{ request()->is('/') ? 'active' : '' }}">
+                        <a href="{{ route('home') }}" class="nav-link pl-0">Home</a>
+                    </li>
+                    <li class="nav-item  {{ request()->is('guru') ? 'active' : '' }}">
+                        <a href="{{ route('guest.teachers') }}" class="nav-link">Guru</a>
+                    </li>
+                    <li class="nav-item {{ request()->is('jurusan') ? 'active' : '' }}">
+                        <a href="{{ route('guest.majors') }}" class="nav-link">Jurusan</a>
+                    </li>
+                    <li class="nav-item {{ request()->is('kegiatan') ? 'active' : '' }}">
+                        <a href="{{ route('guest.article') }}" class="nav-link">kegiatan</a>
+                    </li>
+                    <li class="nav-item {{ request()->is('kontak') ? 'active' : '' }}">
+                        <a href="{{ route('guest.contact') }}" class="nav-link">Kontak</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -80,81 +92,96 @@
             <div class="row mb-5">
                 <div class="col-md-6 col-lg-3">
                     <div class="ftco-footer-widget mb-5">
-                        <h2 class="ftco-heading-2">Have a Questions?</h2>
+                        <h2 class="ftco-heading-2">Hubungi kami</h2>
                         <div class="block-23 mb-3">
                             <ul>
-                                <li><span class="icon icon-map-marker"></span><span class="text">203 Fake St.
-                                        Mountain View, San Francisco, California, USA</span></li>
-                                <li><a href="#"><span class="icon icon-phone"></span><span class="text">+2
-                                            392 3929 210</span></a></li>
+                                <li><span class="icon icon-map-marker"></span><span
+                                        class="text">{{ $profile->address }}</span></li>
+                                <li><a href="#"><span class="icon icon-phone"></span><span
+                                            class="text">{{ $profile->phone }}</span></a></li>
                                 <li><a href="#"><span class="icon icon-envelope"></span><span
-                                            class="text">info@yourdomain.com</span></a></li>
+                                            class="text">{{ $profile->email }}</span></a></li>
                             </ul>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3">
                     <div class="ftco-footer-widget mb-5">
-                        <h2 class="ftco-heading-2">Recent Blog</h2>
-                        <div class="block-21 mb-4 d-flex">
-                            <a class="blog-img mr-4" style="background-image: url(images/image_1.jpg);"></a>
-                            <div class="text">
-                                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control
-                                        about</a></h3>
-                                <div class="meta">
-                                    <div><a href="#"><span class="icon-calendar"></span> Dec 25, 2018</a></div>
-                                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
+                        <h2 class="ftco-heading-2">Kegiatan</h2>
+                        @foreach ($articles as $article)
+                            <div class="block-21 mb-4 d-flex">
+                                <a class="blog-img mr-4"
+                                    style="background-image: url({{ asset("storage/images/$article->image") }});"></a>
+                                <div class="text">
+                                    <h3 class="heading"><a
+                                            href="{{ route('guest.article.show', $article->id) }}">{{ $article->title }}</a>
+                                    </h3>
+                                    <div class="meta">
+                                        <div><a href="#"><span class="icon-calendar"></span>
+                                                {{ $article->created_at->format('M d,Y') }}</a>
+                                        </div>
+                                        <div><a href="#"><span class="icon-person"></span> Admin</a></div>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div class="block-21 mb-5 d-flex">
-                            <a class="blog-img mr-4" style="background-image: url(images/image_2.jpg);"></a>
-                            <div class="text">
-                                <h3 class="heading"><a href="#">Even the all-powerful Pointing has no control
-                                        about</a></h3>
-                                <div class="meta">
-                                    <div><a href="#"><span class="icon-calendar"></span> Dec 25, 2018</a></div>
-                                    <div><a href="#"><span class="icon-person"></span> Admin</a></div>
-                                    <div><a href="#"><span class="icon-chat"></span> 19</a></div>
-                                </div>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3">
                     <div class="ftco-footer-widget mb-5 ml-md-4">
                         <h2 class="ftco-heading-2">Links</h2>
                         <ul class="list-unstyled">
-                            <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Home</a></li>
-                            <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>About</a></li>
-                            <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Services</a>
+                            <li>
+                                <a href="{{ route('home') }}">
+                                    <span class="ion-ios-arrow-round-forward mr-2"></span>Home
+                                </a>
                             </li>
-                            <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Deparments</a>
+                            <li>
+                                <a href="{{ route('guest.teachers') }}">
+                                    <span class="ion-ios-arrow-round-forward mr-2"></span>Guru
+                                </a>
                             </li>
-                            <li><a href="#"><span class="ion-ios-arrow-round-forward mr-2"></span>Contact</a>
+                            <li>
+                                <a href="{{ route('guest.majors') }}">
+                                    <span class="ion-ios-arrow-round-forward mr-2"></span>Jurusan
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('guest.article') }}">
+                                    <span class="ion-ios-arrow-round-forward mr-2"></span>Kegiatan
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('guest.contact') }}">
+                                    <span class="ion-ios-arrow-round-forward mr-2"></span>Kontak
+                                </a>
                             </li>
                         </ul>
                     </div>
                 </div>
                 <div class="col-md-6 col-lg-3">
                     <div class="ftco-footer-widget mb-5">
-                        <h2 class="ftco-heading-2">Subscribe Us!</h2>
-                        <form action="#" class="subscribe-form">
-                            <div class="form-group">
-                                <input type="text" class="form-control mb-2 text-center"
-                                    placeholder="Enter email address">
-                                <input type="submit" value="Subscribe" class="form-control submit px-3">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="ftco-footer-widget mb-5">
-                        <h2 class="ftco-heading-2 mb-0">Connect With Us</h2>
-                        <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-3">
-                            <li class="ftco-animate"><a href="#"><span class="icon-twitter"></span></a></li>
-                            <li class="ftco-animate"><a href="#"><span class="icon-facebook"></span></a></li>
-                            <li class="ftco-animate"><a href="#"><span class="icon-instagram"></span></a></li>
-                        </ul>
+                        @if ($profile->twitter || $profile->facebook || $profile->instagram)
+                            <h2 class="ftco-heading-2 mb-0">Terhubung Melalui</h2>
+                            <ul class="ftco-footer-social list-unstyled float-md-left float-lft mt-3">
+                                @if (isset($profile->twitter))
+                                    <li class="ftco-animate"><a href="{{ $profile->twitter }}"><span
+                                                class="icon-twitter"></span></a>
+                                    </li>
+                                @endif
+                                @if (isset($profile->facebook))
+                                    <li class="ftco-animate"><a href="{{ $profile->facebook }}"><span
+                                                class="icon-facebook"></span></a>
+                                    </li>
+                                @endif
+                                @if (isset($profile->instagram))
+                                    <li class="ftco-animate"><a href="{{ $profile->instagram }}"><span
+                                                class="icon-instagram"></span></a>
+                                    </li>
+                                @endif
+                            </ul>
+                        @endif
+
                     </div>
                 </div>
             </div>

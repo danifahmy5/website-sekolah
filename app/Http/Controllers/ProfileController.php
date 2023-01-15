@@ -31,6 +31,11 @@ class ProfileController extends Controller
             'website' => ['required'],
         ]);
 
+        // melakukan validasi jika terdapat isian value
+        $this->_validationIfFieldExist($request, 'facebook');
+        $this->_validationIfFieldExist($request, 'instagram');
+        $this->_validationIfFieldExist($request, 'twitter');
+
         $category = Profile::findOrFail($id);
 
         $category->update([
@@ -39,8 +44,20 @@ class ProfileController extends Controller
             'phone' => $request->input('phone'),
             'address' => $request->input('address'),
             'website' => $request->input('website'),
+            'facebook' => $request->input('facebook'),
+            'instagram' => $request->input('instagram'),
+            'twitter' => $request->input('twitter'),
         ]);
 
         return redirect()->route('profiles.index', ['nama' => $category->name])->with('message', "berhasil update $category->name");;
+    }
+
+    private function _validationIfFieldExist(Request $request, $input)
+    {
+        if ($request->input($input)) {
+            $request->validate([
+                $input => ['url'],
+            ]);
+        }
     }
 }

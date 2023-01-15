@@ -25,6 +25,8 @@ class AddStatusToBanerTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('baners');
+        Schema::table('baners', function (Blueprint $table) {
+            $table->dropColumn('status');
+        });
     }
 }

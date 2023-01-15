@@ -22,7 +22,7 @@
                     <div class="card">
                         <div class="card-body">
                             <div class="form-group">
-                                <label for="title">Judul</label>
+                                <label for="title">Nama instansi</label>
                                 <input type="text" name="title" id="title"
                                     class="form-control @error('title') is-invalid @enderror"
                                     value="{{ old('title') ? old('title') : $profile->title }}" placeholder="Ketikkan Nama">
@@ -75,6 +75,42 @@
                                     value="{{ old('website') ? old('website') : $profile->website }}"
                                     placeholder="Ketikkan E-mail">
                                 @error('website')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="instagram">Instagram</label>
+                                <input type="text" name="instagram" id="instagram"
+                                    class="form-control @error('instagram') is-invalid @enderror"
+                                    value="{{ old('instagram') ? old('instagram') : $profile->instagram }}"
+                                    placeholder="Ketikkan Instagram">
+                                @error('instagram')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="twitter">Twitter</label>
+                                <input type="text" name="twitter" id="twitter"
+                                    class="form-control @error('twitter') is-invalid @enderror"
+                                    value="{{ old('twitter') ? old('twitter') : $profile->twitter }}"
+                                    placeholder="Ketikkan Twitter">
+                                @error('twitter')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                            <div class="form-group">
+                                <label for="facebook">Facebook</label>
+                                <input type="text" name="facebook" id="facebook"
+                                    class="form-control @error('facebook') is-invalid @enderror"
+                                    value="{{ old('facebook') ? old('facebook') : $profile->facebook }}"
+                                    placeholder="Ketikkan Facebook">
+                                @error('facebook')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

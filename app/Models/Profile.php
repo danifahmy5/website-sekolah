@@ -15,5 +15,8 @@ class Profile extends Model
         'phone',
         'address',
         'website',
+        'instagram',
+        'twitter',
+        'facebook',
     ];
 }
