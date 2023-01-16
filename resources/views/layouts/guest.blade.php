@@ -117,10 +117,12 @@
                                             href="{{ route('guest.article.show', $article->id) }}">{{ $article->title }}</a>
                                     </h3>
                                     <div class="meta">
-                                        <div><a href="#"><span class="icon-calendar"></span>
+                                        <div><a href="{{ route('guest.article.show', $article->id) }}"><span
+                                                    class="icon-calendar"></span>
                                                 {{ $article->created_at->format('M d,Y') }}</a>
                                         </div>
-                                        <div><a href="#"><span class="icon-person"></span> Admin</a></div>
+                                        <div><a href="{{ route('guest.article.show', $article->id) }}"><span
+                                                    class="icon-person"></span> Admin</a></div>
                                     </div>
                                 </div>
                             </div>

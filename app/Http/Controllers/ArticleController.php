@@ -39,7 +39,9 @@ class ArticleController extends Controller
     public function create()
     {
         $categories = Category::active();
-        return view('admin.articles.create', compact('categories'));
+        $richText = true;
+
+        return view('admin.articles.create', compact('categories', 'richText'));
     }
 
     /**
@@ -50,6 +52,7 @@ class ArticleController extends Controller
      */
     public function store(InsertRequest $request)
     {
+
         $imageTitle = null;
         $imageBody = null;
         if ($request->input('image_title')) {
@@ -94,8 +97,9 @@ class ArticleController extends Controller
     {
         $article = Article::findOrFail($id);
         $categories = Category::active();
+        $richText = true;
 
-        return response()->view('admin.articles.edit', compact('article', 'categories'));
+        return response()->view('admin.articles.edit', compact('article', 'categories', 'richText'));
     }
 
     /**

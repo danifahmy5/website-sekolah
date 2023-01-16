@@ -50,16 +50,7 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                <label for="description">Deskripsi</label>
-                                <textarea type="text" name="description" id="description"
-                                    class="form-control @error('description') is-invalid @enderror" placeholder="Ketikkan deskripsi">{{ old('description') ? old('description') : $article->description }}</textarea>
-                                @error('description')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+
                             <div class="form-group">
                                 <label for="image_title">Gambar judul</label>
                                 @if ($article->image_title)
@@ -107,7 +98,16 @@
                                     </span>
                                 @enderror
                             </div>
-
+                            <div class="form-group">
+                                <label for="description">Deskripsi</label>
+                                <textarea type="text" name="description" id="description"
+                                    class="form-control @error('description') is-invalid @enderror" placeholder="Ketikkan deskripsi">{{ old('description') ? old('description') : $article->description }}</textarea>
+                                @error('description')
+                                    <span class="invalid-feedback" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
                         </div>
                         <div class="card-footer">
                             <button class="btn btn-primary" type="submit">Submit</button>
@@ -124,4 +124,7 @@
         </div>
 
     </div>
+    <script>
+        CKEDITOR.replace('description')
+    </script>
 @endsection

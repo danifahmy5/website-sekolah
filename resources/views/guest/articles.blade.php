@@ -14,9 +14,16 @@
             </div>
         </div>
     </section>
-
     <section class="ftco-section bg-light">
         <div class="container">
+            @if ($search)
+                <h4>Hasil pencarian dari : {{ $search }}</h4>
+            @endif
+            @if (request()->query('hashtag'))
+                <div class="btn btn-primary mb-3">
+                    #{{ request()->query('hashtag') }}
+                </div>
+            @endif
             <div class="row">
                 @foreach ($articles as $article)
                     <div class="col-md-6 col-lg-4 ftco-animate">
@@ -32,9 +39,14 @@
                             </a>
                             <div class="text bg-white p-4">
                                 <h3 class="heading"><a
-                                        href={{ route('guest.article.show', $article->id) }}>{{ $article->title }}</a>
+                                        href={{ route('guest.article.show', $article->id) }}><?= highlight_word($article->title, $search) ?></a>
                                 </h3>
-                                <p>{{ strlen($article->description) < 83 ? $article->description : substr($article->description, 0, 83) . '....' }}
+                                <p>
+                                    @if (strlen($article->description) < 83)
+                                        <?= highlight_word($article->description, $search) ?>
+                                    @else
+                                        {!! highlight_word(substr($article->description, 0, 83) . '....', $search) !!}
+                                    @endif
                                 </p>
                                 <div class="d-flex align-items-center mt-4">
                                     <p class="mb-0"><a href="{{ route('guest.article.show', $article->id) }}"

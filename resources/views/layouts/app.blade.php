@@ -12,7 +12,11 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
-
+    @if (isset($richText) && $richText)
+        <script src="{{ asset('vendor/ckeditor-2/ckeditor.js') }}"></script>
+        <link rel="stylesheet" href="{{ asset('vendor/ckeditor-2/samples/css/samples.css') }}">
+    @endif
+    <link rel="stylesheet" href="toolbarconfigurator/lib/codemirror/neo.css">
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
@@ -26,7 +30,7 @@
     <div id="app">
         <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
             <div class="container">
-                <a class="navbar-brand" href="{{ url('/profiles') }}">
+                <a class="navbar-brand" href="{{ route('profiles.index') }}">
                     {{ config('app.name', 'Laravel') }}
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse"

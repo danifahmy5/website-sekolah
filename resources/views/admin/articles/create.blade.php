@@ -45,16 +45,7 @@
                                     </span>
                                 @enderror
                             </div>
-                            <div class="form-group">
-                                <label for="description">Deskripsi</label>
-                                <textarea type="text" name="description" id="description"
-                                    class="form-control @error('description') is-invalid @enderror" placeholder="Ketikkan deskripsi">{{ old('description') }}</textarea>
-                                @error('description')
-                                    <span class="invalid-feedback" role="alert">
-                                        <strong>{{ $message }}</strong>
-                                    </span>
-                                @enderror
-                            </div>
+
                             <div class="form-group">
                                 <label for="image_title">Gambar judul</label>
                                 <input type="file" name="image_title" id="image_title"
@@ -79,6 +70,16 @@
                                     </span>
                                 @enderror
                             </div>
+                            <div class="form-group">
+                                <label for="description">Deskripsi</label>
+                                <textarea type="text" name="description" rows="50" id="description"
+                                    class="form-control @error('description') is-invalid @enderror" placeholder="Ketikkan deskripsi">{{ old('description') }}</textarea>
+                                @error('description')
+                                    <small class="text-danger" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </small>
+                                @enderror
+                            </div>
 
                         </div>
                         <div class="card-footer">
@@ -96,4 +97,66 @@
         </div>
 
     </div>
+    <script>
+        CKEDITOR.editorConfig = function(config) {
+            config.toolbarGroups = [{
+                    name: 'document',
+                    groups: ['mode', 'document', 'doctools']
+                },
+                {
+                    name: 'clipboard',
+                    groups: ['clipboard', 'undo']
+                },
+                {
+                    name: 'editing',
+                    groups: ['find', 'selection', 'spellchecker', 'editing']
+                },
+                {
+                    name: 'forms',
+                    groups: ['forms']
+                },
+                '/',
+                {
+                    name: 'basicstyles',
+                    groups: ['basicstyles', 'cleanup']
+                },
+                {
+                    name: 'paragraph',
+                    groups: ['list', 'indent', 'blocks', 'align', 'bidi', 'paragraph']
+                },
+                {
+                    name: 'links',
+                    groups: ['links']
+                },
+                {
+                    name: 'insert',
+                    groups: ['insert']
+                },
+                '/',
+                {
+                    name: 'styles',
+                    groups: ['styles']
+                },
+                {
+                    name: 'colors',
+                    groups: ['colors']
+                },
+                {
+                    name: 'tools',
+                    groups: ['tools']
+                },
+                {
+                    name: 'others',
+                    groups: ['others']
+                },
+                {
+                    name: 'about',
+                    groups: ['about']
+                }
+            ];
+
+            config.removeButtons = 'Image,HorizontalRule';
+        };
+        CKEDITOR.replace('description');
+    </script>
 @endsection

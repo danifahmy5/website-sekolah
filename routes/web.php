@@ -14,6 +14,8 @@ use App\Http\Controllers\Guest\ContactController;
 use App\Http\Controllers\Guest\HomeController;
 use App\Http\Controllers\Guest\MajorController as GuestMajorController;
 use App\Http\Controllers\Guest\TeacherController as GuestTeacherController;
+use Illuminate\Support\Facades\Artisan;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -49,3 +51,8 @@ Route::get('jurusan/{id}', [GuestMajorController::class, 'show'])->name('guest.m
 Route::get('kegiatan', [GuestArticleController::class, 'index'])->name('guest.article');
 Route::get('kegiatan/{id}', [GuestArticleController::class, 'show'])->name('guest.article.show');
 Route::get('kontak', [ContactController::class, 'index'])->name('guest.contact');
+Route::get('symlink', function () {
+    return response()->json([
+        'message' => 'berhasil run symlink'
+    ]);
+});

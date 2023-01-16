@@ -20,6 +20,7 @@ if (!function_exists('profile')) {
         return App\Models\Profile::first();
     }
 }
+
 if (!function_exists('article')) {
     function article()
     {
@@ -27,4 +28,22 @@ if (!function_exists('article')) {
             ->limit(2)
             ->get();
     }
+}
+if (!function_exists('searchHashtag')) {
+    function searchHashtag($string)
+    {
+        $output = [];
+        if (preg_match_all('/#([^\s]+)/', $string, $matches)) {
+            $output = $matches[1];
+        }
+        return $output;
+    }
+}
+
+function highlight_word($content, $word)
+{
+    $replace = '<span style="background-color: rgb(240, 255, 0);">' . $word . '</span>'; // create replacement
+    $content = str_replace($word, $replace, $content); // replace content
+
+    return $content; // return highlighted data
 }
