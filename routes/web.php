@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ArticleController;
 use App\Http\Controllers\BanerController;
+use App\Http\Controllers\BkkController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\MajorController;
 use App\Http\Controllers\ProfileController;
@@ -30,17 +31,23 @@ use Illuminate\Support\Facades\Artisan;
 Auth::routes();
 
 // route admin
-Route::resource('admin/users', UserController::class)->middleware('auth');
-Route::resource('admin/teacher', TeacherController::class)->middleware('auth');
-Route::resource('admin/categories', CategoryController::class)->middleware('auth');
-Route::resource('admin/articles', ArticleController::class)->middleware('auth');
-Route::resource('admin/baners', BanerController::class)->middleware('auth');
-Route::resource('admin/majors', MajorController::class)->middleware('auth');
-Route::resource('admin/profiles', ProfileController::class)->middleware('auth')
-    ->except('create', 'show', 'destroy', 'edit');
+Route::group(['middleware' => 'auth'], function () {
+    Route::resource('admin/users', UserController::class);
+    Route::resource('admin/teacher', TeacherController::class);
+    Route::resource('admin/categories', CategoryController::class);
+    Route::resource('admin/articles', ArticleController::class);
+    Route::resource('admin/baners', BanerController::class);
+    Route::resource('admin/majors', MajorController::class);
+    Route::resource('admin/bkk', MajorController::class);
+    Route::resource('admin/profiles', ProfileController::class)
+        ->except('create', 'show', 'destroy', 'edit');
 
-Route::put('toggle/baners/{id}', [BanerController::class, 'toggle'])->name('toggle.baners')->middleware('auth');
-Route::put('toggle/majors/{id}', [MajorController::class, 'toggle'])->name('toggle.majors')->middleware('auth');
+    Route::put('toggle/baners/{id}', [BanerController::class, 'toggle'])->name('toggle.baners');
+    Route::put('toggle/majors/{id}', [MajorController::class, 'toggle'])->name('toggle.majors');
+    Route::put('toggle/bkk/{id}', [BkkController::class, 'toggle'])->name('bkk.majors');
+});
+
+
 
 //route user
 Route::get('/', [HomeController::class, 'index'])->name('home');

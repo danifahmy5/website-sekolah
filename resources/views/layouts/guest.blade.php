@@ -111,7 +111,7 @@
                         @foreach ($articles as $article)
                             <div class="block-21 mb-4 d-flex">
                                 <a class="blog-img mr-4"
-                                    style="background-image: url({{ asset("storage/images/$article->image") }});"></a>
+                                    style="background-image: url({{ asset("storage/images/$article->image_title") }});"></a>
                                 <div class="text">
                                     <h3 class="heading"><a
                                             href="{{ route('guest.article.show', $article->id) }}">{{ $article->title }}</a>
